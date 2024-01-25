@@ -43,23 +43,41 @@ export class Database {
   }
 
 
-export class BankAccount {
+  export class BankAccount {
     private accountNumber: string;
-    private balance: number;
-    private pinCode: string;
+    private pinCode: string | undefined;
     private result: any;
     database: Database;
     
-    constructor(accountNumber: string, balance: number, pinCode: string) {
+    constructor(accountNumber: string, pinCode: string) {
+        this.accountNumber = accountNumber;  // Assign the value here
         this.database = new Database();
-        this.result = this.database.executeSQL(`SELECT * FROM bank WHERE accountNumber = ${this.accountNumber}`)
+        this.fetchAccount();    
     }
     
+    private async fetchAccount() { 
+        this.result = await this.database.executeSQL(`SELECT * FROM bank WHERE accountNumber = '${this.accountNumber}'`);
+        this.returnAccount();
+    }
+
+
     public returnAccount = () => {
-        console.log(this.result)
+        console.log(this.result);
     }
-    
+
+
+    public async transaction = (amount: number) => {
+        const conn: mariadb.PoolConnection;
+
+        conn = await Pool.getConnection();
+
+        await conn.beginTransaction();
+
+        await conn.query('Update ')
+    }
+
+
 }
 
-const bankAccount = new BankAccount("d", 3, "d")
-bankAccount.returnAccount
+const bankAccount = new BankAccount("1A", "12345");
+bankAccount.returnAccount();

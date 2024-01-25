@@ -96,11 +96,34 @@ var BankAccount = /** @class */ (function () {
         this.returnAccount = function () {
             console.log(_this.result);
         };
+        this.accountNumber = accountNumber; // Assign the value here
         this.database = new Database();
-        this.result = this.database.executeSQL("SELECT * FROM bank WHERE accountNumber = ".concat(this.accountNumber));
+        this.fetchAccount();
     }
+    BankAccount.prototype.fetchAccount = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, error_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = this;
+                        return [4 /*yield*/, this.database.executeSQL("SELECT * FROM bank WHERE accountNumber = '".concat(this.accountNumber, "'"))];
+                    case 1:
+                        _a.result = _b.sent();
+                        this.returnAccount();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _b.sent();
+                        console.error(error_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return BankAccount;
 }());
 exports.BankAccount = BankAccount;
-var bankAccount = new BankAccount("d", 3, "d");
-bankAccount.returnAccount;
+var bankAccount = new BankAccount("1A", 3000, "12345");
+bankAccount.returnAccount();
