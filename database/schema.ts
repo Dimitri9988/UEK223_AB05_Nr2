@@ -1,0 +1,11 @@
+const BANKACCOUNT_TABLE = `
+CREATE TABLE IF NOT EXISTS bank (
+    id INT NOT NULL AUTO_INCREMENT,
+    accountNumber VARCHAR(255) NOT NULL,
+    balance INT NOT NULL,
+    pinCode VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+`
+
+export { BANKACCOUNT_TABLE }
